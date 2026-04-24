@@ -1,0 +1,74 @@
+Overall vibe
+- Playful + experimental
+- Feels like a toy / sandbox / digital playground
+- Not trying to be “clean corporate”—it’s intentionally weird,
+expressive, and memorable
+
+Core design philosophy
+This site fits into the “creative developer portfolio” style where:
+- The website itself is the main project
+- It demonstrates technical + artistic skill at the same time
+- Interaction is more important than static content
+
+Visual style
+
+1.  Crayon / hand-drawn aesthetic
+
+-   Rough, sketch-like visuals
+-   Bright, slightly chaotic colors (neon greens, cyans, etc.)
+-   Feels intentionally imperfect and human
+
+2.  Retro + nostalgic UI references
+
+-   Inspired by old desktop OS / early web
+-   Windows, buttons, playful UI metaphors
+-   Feels like exploring a fake operating system
+
+3.  High-contrast + bold color usage
+
+-   Neon accents
+-   Dark backgrounds + glowing elements
+-   Arcade / experimental lab energy
+
+Interaction design
+
+1.  Heavy use of micro-interactions
+
+-   Hover effects everywhere
+-   Click leads to unexpected animation
+-   Elements react in playful ways
+
+2.  Surprise mechanics
+
+-   Hidden interactions
+-   Objects move, glitch, transform
+-   Constant sense of discovery
+
+3.  Physics + motion
+
+-   Objects feel alive
+-   Dragging, bouncing, morphing
+-   Game-like interaction feel
+
+Technical style
+- Uses Three.js / WebGL for 3D and rendering
+- Custom animations (GLSL, physics engines, etc.)
+- Real-time rendering instead of static UI
+- Smooth, high-performance motion
+
+Tone / personality
+- Casual, funny, slightly chaotic
+- Playful language and vibe
+- Feels confident and creative without being formal
+
+Style labels
+- Creative coding / generative web art
+- Playful brutalism
+- Interactive storytelling
+- Experimental portfolio design
+- “Inner child” aesthetic
+
+Why it works
+- Very memorable
+- Shows skill through experience, not just content
+- Breaks expectations and keeps users engaged

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yinuo's Playground</title>
+    <meta
+      name="description"
+      content="An interactive personal website built like a playful desktop playground."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="cursor-glow"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-scribble">Yinuo's</span>
+        <span class="brand-solid">playground.exe</span>
+      </div>
+      <nav class="nav-pills" aria-label="Quick navigation">
+        <button class="nav-pill" data-focus="intro">intro</button>
+        <button class="nav-pill" data-focus="about">about</button>
+        <button class="nav-pill" data-focus="path">path</button>
+        <button class="nav-pill" data-focus="projects">projects</button>
+        <button class="nav-pill" data-focus="organizations">organizations</button>
+        <button class="nav-pill" data-focus="contact">contact</button>
+      </nav>
+    </header>
+
+    <main class="desktop" id="desktop">
+      <section class="hero-marquee">
+        <p class="eyebrow">creative technologist / storyteller / community-minded builder</p>
+        <h1>
+          Personal websites should feel
+          <span>alive</span>,
+          not laminated.
+        </h1>
+        <p class="hero-copy">
+          This space is part portfolio, part sketchbook, part fake operating
+          system. Drag windows around, poke buttons, and let the internet feel a
+          little more playful again.
+        </p>
+      </section>
+
+      <article class="window window-intro" data-window="intro">
+        <div class="window-bar">
+          <div class="window-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <p>boot log / hello world</p>
+        </div>
+        <div class="window-body">
+          <div class="intro-grid">
+            <div>
+              <p class="tag">currently online</p>
+              <h2>Hi, I'm Yinuo.</h2>
+              <p>
+                I like building things that are useful, expressive, and a little
+                bit mischievous. My favorite projects sit somewhere between code,
+                design, storytelling, and community.
+              </p>
+              <div class="stats">
+                <div>
+                  <span>mode</span>
+                  <strong>playful builder</strong>
+                </div>
+                <div>
+                  <span>energy</span>
+                  <strong>neon + human</strong>
+                </div>
+                <div>
+                  <span>mission</span>
+                  <strong>make tech feel warm</strong>
+                </div>
+              </div>
+            </div>
+            <figure class="portrait-card">
+              <img
+                src="./resources/photos/IMG_0409.JPG"
+                alt="Portrait of Yinuo by the waterfront skyline"
+              />
+              <figcaption>proof that I do occasionally leave the browser tab</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="window window-about" data-window="about">
+        <div class="window-bar">
+          <div class="window-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <p>about_me.txt</p>
+        </div>
+        <div class="window-body">
+          <p class="tag">what I'm about</p>
+          <div class="notes">
+            <p>I care about interfaces with personality, not just polish.</p>
+            <p>I like making dense ideas feel inviting and intuitive.</p>
+            <p>I enjoy projects that mix visuals, systems thinking, and people.</p>
+            <p>I think delight is a feature, not decoration.</p>
+          </div>
+          <div class="sketch-lines" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="window window-path" data-window="path">
+        <div class="window-bar">
+          <div class="window-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <p>path.timeline</p>
+        </div>
+        <div class="window-body">
+          <p class="tag">education + work experience in one line</p>
+          <div class="path-timeline">
+            <div class="timeline-rail" aria-hidden="true"></div>
+            <article class="timeline-event timeline-event-top">
+              <span class="timeline-year">then</span>
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-label">foundation</span>
+                <h3>Early curiosity era</h3>
+                <p>
+                  Started leaning toward creative problem solving, storytelling,
+                  and building things that feel alive.
+                </p>
+              </div>
+            </article>
+            <article class="timeline-event timeline-event-bottom">
+              <span class="timeline-year">now</span>
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-label">education</span>
+                <h3>University of Toronto</h3>
+                <p>
+                  Growing across academics, community, and creative leadership
+                  while exploring technology with human impact.
+                </p>
+              </div>
+            </article>
+            <article class="timeline-event timeline-event-top">
+              <span class="timeline-year">along the way</span>
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-label">experience</span>
+                <h3>Hands-on roles and projects</h3>
+                <p>
+                  Learning by organizing, producing, collaborating, and shipping
+                  work in real environments.
+                </p>
+              </div>
+            </article>
+            <article class="timeline-event timeline-event-bottom">
+              <span class="timeline-year">current focus</span>
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-label">direction</span>
+                <h3>Tech + communication + impact</h3>
+                <p>
+                  Moving toward work that blends systems thinking, expressive
+                  design, and meaningful public-facing experiences.
+                </p>
+              </div>
+            </article>
+            <article class="timeline-event timeline-event-top">
+              <span class="timeline-year">next</span>
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <span class="timeline-label">future</span>
+                <h3>More ambitious builds</h3>
+                <p>
+                  Looking for bigger opportunities to design, build, and lead
+                  work that people actually remember.
+                </p>
+              </div>
+            </article>
+          </div>
+          <p class="timeline-note">
+            We can swap these placeholder milestones for your exact schools,
+            roles, internships, and dates whenever you're ready.
+          </p>
+        </div>
+      </article>
+
+      <article class="window window-projects" data-window="projects">
+        <div class="window-bar">
+          <div class="window-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <p>projects.gallery</p>
+        </div>
+        <div class="window-body">
+          <p class="tag">selected work / experiments / things I've made</p>
+          <div class="gallery-grid">
+            <figure class="photo-card">
+              <img src="./resources/photos/trinity-home-wide-01.jpg" alt="Campus courtyard" />
+              <figcaption>projects that blend institution, story, and experience</figcaption>
+            </figure>
+            <figure class="photo-card tilt-right">
+              <img src="./resources/photos/5R4A8317.JPG" alt="Camera setup at an event" />
+              <figcaption>media, production, and hands-on execution</figcaption>
+            </figure>
+            <figure class="photo-card tilt-left">
+              <img src="./resources/photos/IMG_2620.JPG" alt="Lifestyle snapshot" />
+              <figcaption>personal and creative work with personality</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="window window-organizations" data-window="organizations">
+        <div class="window-bar">
+          <div class="window-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <p>organizations.network</p>
+        </div>
+        <div class="window-body">
+          <p class="tag">communities, teams, and organizations I've worked with</p>
+          <div class="logo-cloud">
+            <div class="logo-chip"><img src="./resources/logos/TEDxUofT_logo_black.png" alt="TEDxUofT logo" /></div>
+            <div class="logo-chip"><img src="./resources/logos/kiwanis-logo-400.png" alt="Kiwanis logo" /></div>
+            <div class="logo-chip"><img src="./resources/logos/NYS logo.jpeg" alt="NYS logo" /></div>
+            <div class="logo-chip"><img src="./resources/logos/BAG-Wordmark-20130_b84aeb26-5056-b3a8-496e19d6a319e550.jpg" alt="BAG wordmark" /></div>
+            <div class="logo-chip"><img src="./resources/logos/images.png" alt="Organization logo" /></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="window window-contact" data-window="contact">
+        <div class="window-bar">
+          <div class="window-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <p>contact_portal</p>
+        </div>
+        <div class="window-body">
+          <p class="tag">let's make something memorable</p>
+          <p>
+            I’m most excited by work that blends strategy, aesthetics, and
+            interactivity. If you want a collaborator who likes both systems and
+            surprises, this tab is open.
+          </p>
+          <div class="contact-grid">
+            <button class="contact-link" data-placeholder="add your email here" type="button">
+              email slot
+            </button>
+            <button class="contact-link" data-placeholder="drop in your github url" type="button">
+              github slot
+            </button>
+            <button class="contact-link" data-placeholder="drop in your linkedin url" type="button">
+              linkedin slot
+            </button>
+          </div>
+          <button class="secret-trigger" id="secret-trigger" type="button">
+            do not press
+          </button>
+        </div>
+      </article>
+
+      <aside class="sticky-note sticky-note-a">
+        <p>drag the windows.</p>
+      </aside>
+      <aside class="sticky-note sticky-note-b">
+        <p>hover everything.</p>
+      </aside>
+      <aside class="sticky-note sticky-note-c">
+        <p>websites can have a pulse.</p>
+      </aside>
+    </main>
+
+    <footer class="dock">
+      <button class="dock-button" id="shuffle-button" type="button">shuffle windows</button>
+      <button class="dock-button" id="party-button" type="button">party mode</button>
+      <button class="dock-button" id="reset-button" type="button">reset layout</button>
+      <div class="status-light">
+        <span></span>
+        <p>playground status: responsive and slightly chaotic</p>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
