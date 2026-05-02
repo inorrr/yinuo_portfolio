@@ -1,16 +1,17 @@
 const canvas = document.getElementById("kinetic-name");
 const ctx = canvas.getContext("2d");
+const navRail = document.getElementById("section-nav");
 
 const CONFIG = {
   name: "YINUO ZHAO",
   sidePadding: 0.08,
   topAnchorPadding: 0,
-  baseFontDesktop: 88,
-  baseFontMobile: 46,
+  baseFontDesktop: 104,
+  baseFontMobile: 56,
   minFont: 28,
   maxFont: 120,
   letterSpacingFactor: 1.12,
-  wordGapFactor: 1.95,
+  wordGapFactor: 1.45,
   minLengthFactor: 0.24,
   maxLengthFactor: 0.38,
   gravity: 1000,
@@ -98,7 +99,7 @@ function makeLetters() {
 
 function measureLetterWidth(fontSize, char) {
   ctx.save();
-  ctx.font = `500 ${fontSize}px "Baskerville", "Iowan Old Style", "Times New Roman", serif`;
+  ctx.font = `400 ${fontSize}px "Cardo", "Iowan Old Style", "Palatino Linotype", serif`;
   const measured = ctx.measureText(char);
   ctx.restore();
   return measured.width;
@@ -457,7 +458,7 @@ function drawLetter(letter) {
   drawSmoothRope(ropePath, { x: letter.bob.x, y: letter.bob.y });
 
   ctx.fillStyle = "rgba(24, 22, 20, 0.98)";
-  ctx.font = `600 ${letter.fontSize}px "Baskerville", "Iowan Old Style", "Times New Roman", serif`;
+  ctx.font = `400 ${letter.fontSize}px "Cardo", "Iowan Old Style", "Palatino Linotype", serif`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.translate(letter.bob.x, letter.bob.y + glyphOffsetY);
@@ -544,6 +545,59 @@ function releasePointer() {
   pointer.movedAt = performance.now();
 }
 
+function setupSectionNav() {
+  if (!navRail) {
+    return;
+  }
+
+  const sections = [...document.querySelectorAll("[data-section][id]")];
+
+  if (!sections.length) {
+    navRail.hidden = true;
+    return;
+  }
+
+  const links = sections.map((section, index) => {
+    const label =
+      section.dataset.navLabel ||
+      section.getAttribute("aria-label") ||
+      `Section ${index + 1}`;
+    const link = document.createElement("a");
+    link.className = "section-nav__link";
+    link.href = `#${section.id}`;
+    link.textContent = label;
+    navRail.appendChild(link);
+    return link;
+  });
+
+  function setActiveSection(sectionId) {
+    links.forEach((link) => {
+      const active = link.getAttribute("href") === `#${sectionId}`;
+      link.classList.toggle("is-active", active);
+      link.setAttribute("aria-current", active ? "page" : "false");
+    });
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visibleEntries = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+      if (visibleEntries[0]) {
+        setActiveSection(visibleEntries[0].target.id);
+      }
+    },
+    {
+      threshold: [0.35, 0.6, 0.85],
+      rootMargin: "-20% 0px -28% 0px",
+    }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+  setActiveSection(sections[0].id);
+}
+
 window.addEventListener("pointermove", (event) => {
   updatePointer(event.clientX, event.clientY);
 });
@@ -583,6 +637,7 @@ document.addEventListener("mouseleave", releasePointer);
 window.addEventListener("resize", updateCanvasSize);
 
 makeLetters();
+setupSectionNav();
 updateCanvasSize();
 requestAnimationFrame((time) => {
   lastFrame = time;

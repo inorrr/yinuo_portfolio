@@ -8,10 +8,29 @@
       name="description"
       content="A minimalist personal landing page with hanging kinetic letters."
     />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="landing" aria-labelledby="site-title">
+    <main
+      id="home"
+      class="landing"
+      aria-labelledby="site-title"
+      data-section
+      data-nav-label="Home"
+    >
       <canvas
         id="kinetic-name"
         class="kinetic-canvas"
@@ -26,6 +45,63 @@
         </p>
       </div>
     </main>
+
+    <section
+      id="experience"
+      class="content-section"
+      aria-labelledby="experience-title"
+      data-section
+      data-nav-label="Experience"
+    >
+      <div class="content-section__inner">
+        <p class="content-section__eyebrow">Experience</p>
+        <h2 id="experience-title">Selected experience</h2>
+        <p>
+          A snapshot of leadership, creative direction, and hands-on work
+          across community projects, strategy, and design.
+        </p>
+      </div>
+    </section>
+
+    <section
+      id="project"
+      class="content-section"
+      aria-labelledby="project-title"
+      data-section
+      data-nav-label="Project"
+    >
+      <div class="content-section__inner">
+        <p class="content-section__eyebrow">Project</p>
+        <h2 id="project-title">Featured work</h2>
+        <p>
+          Projects, campaigns, and experiments that bring together visual
+          storytelling, research, and execution.
+        </p>
+      </div>
+    </section>
+
+    <section
+      id="contact"
+      class="content-section"
+      aria-labelledby="contact-title"
+      data-section
+      data-nav-label="Contact"
+    >
+      <div class="content-section__inner">
+        <p class="content-section__eyebrow">Contact</p>
+        <h2 id="contact-title">Let’s connect</h2>
+        <p>
+          Reach out for collaborations, creative partnerships, or a quick hello.
+        </p>
+      </div>
+    </section>
+
+    <nav
+      class="section-nav"
+      aria-label="Section navigation"
+    >
+      <div class="section-nav__rail" id="section-nav"></div>
+    </nav>
 
     <script src="./script.js"></script>
   </body>
