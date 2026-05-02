@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div
+      id="custom-cursor"
+      class="custom-cursor"
+      aria-hidden="true"
+    ></div>
+
     <main
       id="home"
       class="landing"
@@ -44,7 +50,29 @@
           react to pointer movement.
         </p>
       </div>
+
+      <div class="scroll-cue" aria-hidden="true">
+        <span class="scroll-cue__label">Scroll</span>
+        <span class="scroll-cue__arrow">↓</span>
+      </div>
     </main>
+
+    <section
+      id="about"
+      class="content-section"
+      aria-labelledby="about-title"
+      data-section
+      data-nav-label="About"
+    >
+      <div class="content-section__inner">
+        <p class="content-section__eyebrow">About</p>
+        <h2 id="about-title">A little about me</h2>
+        <p class="content-section__intro">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+      </div>
+    </section>
 
     <section
       id="experience"
@@ -55,28 +83,60 @@
     >
       <div class="content-section__inner">
         <p class="content-section__eyebrow">Experience</p>
-        <h2 id="experience-title">Selected experience</h2>
-        <p>
-          A snapshot of leadership, creative direction, and hands-on work
-          across community projects, strategy, and design.
+        <h2 id="experience-title">Education and work experience</h2>
+        <p class="content-section__intro">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
+        <div class="content-group">
+          <div class="content-entry">
+            <h3>Education</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="content-entry">
+            <h3>Work Experience</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section
-      id="project"
+      id="projects"
       class="content-section"
-      aria-labelledby="project-title"
+      aria-labelledby="projects-title"
       data-section
-      data-nav-label="Project"
+      data-nav-label="Projects"
     >
       <div class="content-section__inner">
-        <p class="content-section__eyebrow">Project</p>
-        <h2 id="project-title">Featured work</h2>
-        <p>
-          Projects, campaigns, and experiments that bring together visual
-          storytelling, research, and execution.
+        <p class="content-section__eyebrow">Projects</p>
+        <h2 id="projects-title">Projects and publications</h2>
+        <p class="content-section__intro">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
+        <div class="content-group">
+          <div class="content-entry">
+            <h3>Projects</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="content-entry">
+            <h3>Publications</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -89,10 +149,25 @@
     >
       <div class="content-section__inner">
         <p class="content-section__eyebrow">Contact</p>
-        <h2 id="contact-title">Let’s connect</h2>
-        <p>
-          Reach out for collaborations, creative partnerships, or a quick hello.
+        <h2 id="contact-title">LinkedIn, email, and location</h2>
+        <p class="content-section__intro">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
+        <div class="content-group">
+          <div class="content-entry">
+            <h3>LinkedIn</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+          <div class="content-entry">
+            <h3>Email</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+          <div class="content-entry">
+            <h3>Location</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -102,6 +177,10 @@
     >
       <div class="section-nav__rail" id="section-nav"></div>
     </nav>
+
+    <footer class="site-footer" aria-label="Site footer">
+      <p>© 2026 Yinuo Zhao. Designed and developed by Yinuo Zhao.</p>
+    </footer>
 
     <script src="./script.js"></script>
   </body>

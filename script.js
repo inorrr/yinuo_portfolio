@@ -1,6 +1,7 @@
 const canvas = document.getElementById("kinetic-name");
 const ctx = canvas.getContext("2d");
 const navRail = document.getElementById("section-nav");
+const customCursor = document.getElementById("custom-cursor");
 
 const CONFIG = {
   name: "YINUO ZHAO",
@@ -21,14 +22,14 @@ const CONFIG = {
   returnStrength: 0.006,
   midReturnStrength: 0.016,
   settleBoost: 1.06,
-  idleForce: 4.2,
-  idleFrequency: 0.001,
-  idleRestFactor: 0.16,
-  pointerRadius: 175,
+  idleSwingForce: 18,
+  idleSwingFrequency: 0.00055,
+  idleRestFactor: 0.24,
+  pointerRadius: 112,
   pointerRecentMs: 650,
   pointerVelocityInfluence: 0.22,
   pointerPush: 5,
-  stringTouchRadius: 92,
+  stringTouchRadius: 64,
   stringPull: 1.6,
   maxVelocity: 1,
   stringWidth: 1.8,
@@ -54,6 +55,7 @@ let width = 0;
 let height = 0;
 let lastFrame = performance.now();
 let accumulator = 0;
+const supportsFinePointer = window.matchMedia("(pointer: fine)").matches;
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -344,7 +346,9 @@ function simulate(subDt, now) {
       return;
     }
 
-    const idlePush = Math.sin(now * CONFIG.idleFrequency + letter.phase) * CONFIG.idleForce * idleScale;
+    const idleAngle = now * CONFIG.idleSwingFrequency + letter.phase;
+    const idleSwing = Math.sin(idleAngle) * CONFIG.idleSwingForce * idleScale;
+    const idleLift = Math.cos(idleAngle * 2) * CONFIG.idleSwingForce * 0.02 * idleScale;
 
     letter.ropePoints.forEach((point, index) => {
       const gravityScale = 0.2 + index * 0.055;
@@ -358,9 +362,12 @@ function simulate(subDt, now) {
     integratePoint(letter.bob, subDt, 0.86);
 
     letter.ropePoints.forEach((point, index) => {
-      point.x += idlePush * (0.08 + index * 0.04) * subDt;
+      const swayWeight = 0.055 + index * 0.024;
+      point.x += idleSwing * swayWeight * subDt;
+      point.y -= Math.abs(idleLift) * swayWeight * 0.12 * subDt;
     });
-    letter.bob.x += idlePush * 0.28 * subDt;
+    letter.bob.x += idleSwing * 0.46 * subDt;
+    letter.bob.y -= Math.abs(idleLift) * 0.1 * subDt;
 
     letter.ropePoints.forEach((point, index) => {
       const radius = CONFIG.pointerRadius * (0.55 + index * 0.08);
@@ -383,9 +390,6 @@ function simulate(subDt, now) {
     constrainLetter(letter);
     updateLetterTilt(letter);
 
-    if (!active) {
-      snapToRestIfSettled(letter);
-    }
   });
 }
 
@@ -534,6 +538,11 @@ function updatePointer(clientX, clientY) {
   pointer.lastY = clientY;
   pointer.movedAt = performance.now();
   pointer.inside = true;
+
+  if (supportsFinePointer && customCursor) {
+    customCursor.style.transform = `translate(${clientX - 6}px, ${clientY - 6}px)`;
+    customCursor.classList.add("is-visible");
+  }
 }
 
 function releasePointer() {
@@ -543,6 +552,10 @@ function releasePointer() {
   pointer.lastX = pointer.x;
   pointer.lastY = pointer.y;
   pointer.movedAt = performance.now();
+
+  if (customCursor) {
+    customCursor.classList.remove("is-visible");
+  }
 }
 
 function setupSectionNav() {

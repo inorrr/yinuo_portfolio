@@ -15,7 +15,6 @@ html,
 body {
   margin: 0;
   min-height: 100%;
-  cursor: url("./resources/hand-cursor.png") 6 6, auto;
   scroll-behavior: smooth;
 }
 
@@ -30,12 +29,74 @@ body {
     linear-gradient(180deg, #fbf8f2 0%, var(--bg) 52%, var(--bg-warm) 100%);
 }
 
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(25, 24, 22, 0.9);
+  border-radius: 50%;
+  background: rgba(25, 24, 22, 0.16);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 160ms ease;
+  z-index: 30;
+}
+
+.custom-cursor.is-visible {
+  opacity: 1;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 10rem;
+  pointer-events: none;
+  z-index: 9;
+  background: linear-gradient(
+    180deg,
+    rgba(241, 233, 222, 0) 0%,
+    rgba(241, 233, 222, 0.68) 48%,
+    var(--bg-warm) 100%
+  );
+}
+
 .landing {
   position: relative;
   width: 100vw;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+}
+
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  top: 72%;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  transform: translate(-50%, -50%);
+  color: var(--muted);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.scroll-cue__label {
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.scroll-cue__arrow {
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .content-section {
@@ -50,6 +111,11 @@ body {
 .content-section__inner {
   width: min(42rem, 100%);
   text-align: center;
+}
+
+.content-section__intro {
+  margin: 0 auto;
+  max-width: 34rem;
 }
 
 .content-section__eyebrow {
@@ -71,6 +137,25 @@ body {
   margin: 0;
   font-size: clamp(1rem, 2vw, 1.2rem);
   line-height: 1.7;
+}
+
+.content-group {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.content-entry h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.content-entry p {
+  font-size: 1rem;
 }
 
 .kinetic-canvas {
@@ -115,7 +200,6 @@ body {
   border: 0;
   background: transparent;
   color: var(--muted);
-  cursor: pointer;
   font: inherit;
   font-size: 0.82rem;
   letter-spacing: 0.12em;
@@ -143,7 +227,33 @@ body {
   text-decoration-thickness: 1px;
 }
 
+.site-footer {
+  padding: 0 1.5rem 8rem;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+@media (pointer: fine) {
+  html,
+  body,
+  a,
+  button,
+  [role="button"] {
+    cursor: none;
+  }
+}
+
 @media (max-width: 640px) {
+  .scroll-cue {
+    top: 74%;
+  }
+
   .section-nav {
     bottom: 1rem;
     width: calc(100vw - 1rem);
@@ -160,4 +270,5 @@ body {
     font-size: 0.74rem;
     text-align: center;
   }
+
 }
