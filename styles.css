@@ -22,6 +22,7 @@ body {
   color: var(--ink);
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino,
     "Times New Roman", serif;
+  cursor: url("./resources/hand.png") 12 12, auto;
   background:
     radial-gradient(circle at 50% 18%, var(--glow), transparent 32%),
     radial-gradient(circle at 22% 82%, rgba(241, 233, 222, 0.42), transparent 28%),

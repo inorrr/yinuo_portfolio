@@ -62,7 +62,8 @@ This document explains the `CONFIG` object in [script.js](/Users/yinuozhao/Deskt
 ## Return And Settling
 
 - `returnStrength`
-  How strongly the lower point carrying each letter is pulled back toward its rest position.
+  How strongly the lower bob point carrying each letter is pulled back toward its rest position.
+  Higher values make the hanging mass recover faster.
 
 - `midReturnStrength`
   Return strength applied across the rope control points.
@@ -108,6 +109,17 @@ This document explains the `CONFIG` object in [script.js](/Users/yinuozhao/Deskt
 - `stringPull`
   Strength of pointer influence on the rope itself.
 
+## Letter Tilt Rendering
+
+- `letterTiltResponse`
+  How quickly the visible letter tilt responds to the rope’s current angle.
+  Higher values make the displayed tilt catch up faster.
+
+- `letterTiltDamping`
+  Extra damping applied to the visible letter tilt.
+  Lower values make the letter return upright faster.
+  Higher values let the visible tilt linger longer.
+
 ## Motion Limits And Rendering
 
 - `maxVelocity`
@@ -121,7 +133,8 @@ This document explains the `CONFIG` object in [script.js](/Users/yinuozhao/Deskt
 
 ## Tuning Notes
 
-- `airFriction: 1` means almost no natural damping from air friction, so most settling comes from return forces and constraint solving.
+- `airFriction: 0.996` is a light damping setting.
+  It allows the rope to keep some life while still shedding energy over time.
 
 - `maxVelocity: 1` is very restrictive and can make motion feel highly controlled.
 
@@ -134,6 +147,15 @@ This document explains the `CONFIG` object in [script.js](/Users/yinuozhao/Deskt
 - Higher `pointerPush` and `stringPull` increase interaction amplitude.
 
 - Higher `idleForce` makes the letters feel more alive even when untouched.
+
+- If the letters stay tilted too long even after the rope has mostly calmed down:
+  increase `letterTiltResponse` or lower `letterTiltDamping`.
+
+- If the rope feels too soft:
+  increase `constraintIterations`, increase `midReturnStrength`, or reduce `ropeSegments`.
+
+- If the rope feels too angular:
+  increase `ropeSegments` and keep the smooth rope rendering enabled.
 
 ## Multi-Segment Rope Change
 
