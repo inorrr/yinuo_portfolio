@@ -2,6 +2,8 @@ const canvas = document.getElementById("kinetic-name");
 const ctx = canvas.getContext("2d");
 const navRail = document.getElementById("section-nav");
 const customCursor = document.getElementById("custom-cursor");
+const experienceIntro = document.getElementById("experience-intro");
+const experienceTimeline = document.getElementById("experience-timeline");
 
 const CONFIG = {
   name: "YINUO ZHAO",
@@ -56,6 +58,78 @@ let height = 0;
 let lastFrame = performance.now();
 let accumulator = 0;
 const supportsFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+function getMonthsBetween(start, end) {
+  return (end.year - start.year) * 12 + (end.month - start.month);
+}
+
+function parseContentMonth(dateString) {
+  const [yearString, monthString] = dateString.split("-");
+  return {
+    year: Number(yearString),
+    month: Number(monthString),
+  };
+}
+
+function renderExperienceTimeline() {
+  const experienceContent = window.SITE_CONTENT && window.SITE_CONTENT.experience;
+
+  if (!experienceTimeline || !experienceContent) {
+    return;
+  }
+
+  const { intro, rangeStart, rangeEnd, events } = experienceContent;
+  const line = experienceTimeline.querySelector(".experience-timeline__line");
+
+  if (!line) {
+    return;
+  }
+
+  if (experienceIntro) {
+    experienceIntro.textContent = intro;
+  }
+
+  const totalMonths = getMonthsBetween(rangeStart, rangeEnd);
+  experienceTimeline.style.setProperty("--timeline-months", `${totalMonths}`);
+
+  experienceTimeline.querySelectorAll(".experience-year-tick, .experience-event").forEach((node) => {
+    node.remove();
+  });
+
+  for (let year = rangeStart.year; year <= rangeEnd.year; year += 1) {
+    const monthOffset = getMonthsBetween(rangeStart, { year, month: 1 });
+
+    if (monthOffset < 0 || monthOffset > totalMonths) {
+      continue;
+    }
+
+    const tick = document.createElement("div");
+    tick.className = "experience-year-tick";
+    tick.style.setProperty("--month", `${monthOffset}`);
+
+    const label = document.createElement("span");
+    label.className = "experience-year-tick__label";
+    label.textContent = `${year}`;
+    tick.appendChild(label);
+
+    experienceTimeline.appendChild(tick);
+  }
+
+  events.forEach((event, index) => {
+    const eventDate = parseContentMonth(event.date);
+    const monthOffset = getMonthsBetween(rangeStart, eventDate);
+    const article = document.createElement("article");
+    article.className = `experience-event experience-event--${index % 2 === 0 ? "top" : "bottom"}`;
+    article.style.setProperty("--month", `${monthOffset}`);
+
+    const title = document.createElement("h3");
+    title.className = "experience-event__title";
+    title.textContent = event.title;
+
+    article.appendChild(title);
+    experienceTimeline.appendChild(article);
+  });
+}
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -649,6 +723,7 @@ window.addEventListener("blur", releasePointer);
 document.addEventListener("mouseleave", releasePointer);
 window.addEventListener("resize", updateCanvasSize);
 
+renderExperienceTimeline();
 makeLetters();
 setupSectionNav();
 updateCanvasSize();

@@ -81,28 +81,16 @@
       data-section
       data-nav-label="Experience"
     >
-      <div class="content-section__inner">
+      <div class="content-section__inner content-section__inner--wide">
         <p class="content-section__eyebrow">Experience</p>
-        <h2 id="experience-title">Education and work experience</h2>
-        <p class="content-section__intro">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-        <div class="content-group">
-          <div class="content-entry">
-            <h3>Education</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-          <div class="content-entry">
-            <h3>Work Experience</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
+        <h2 id="experience-title">Where I’ve been, where I’m going</h2>
+        <p class="content-section__intro" id="experience-intro"></p>
+        <div
+          class="experience-timeline"
+          id="experience-timeline"
+          aria-label="Timeline of key experience"
+        >
+          <div class="experience-timeline__line" aria-hidden="true"></div>
         </div>
       </div>
     </section>
@@ -182,6 +170,7 @@
       <p>© 2026 Yinuo Zhao. Designed and developed by Yinuo Zhao.</p>
     </footer>
 
+    <script src="./content/site-content.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>

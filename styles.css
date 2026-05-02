@@ -113,6 +113,10 @@ body::after {
   text-align: center;
 }
 
+.content-section__inner--wide {
+  width: min(78rem, 100%);
+}
+
 .content-section__intro {
   margin: 0 auto;
   max-width: 34rem;
@@ -156,6 +160,134 @@ body::after {
 
 .content-entry p {
   font-size: 1rem;
+}
+
+.experience-timeline {
+  --timeline-months: 71;
+  --timeline-inset: 1.5rem;
+  position: relative;
+  margin-top: 1.25rem;
+  min-height: 30rem;
+  padding: 4rem var(--timeline-inset);
+}
+
+.experience-timeline__line {
+  position: absolute;
+  left: var(--timeline-inset);
+  right: var(--timeline-inset);
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(101, 92, 80, 0.2), rgba(101, 92, 80, 0.68), rgba(101, 92, 80, 0.2));
+}
+
+.experience-timeline__line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0.8rem;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(101, 92, 80, 0.3) 0,
+    rgba(101, 92, 80, 0.3) 1px,
+    transparent 1px,
+    transparent calc(100% / var(--timeline-months))
+  );
+}
+
+.experience-year-tick {
+  position: absolute;
+  left: calc(
+    var(--timeline-inset) +
+    (var(--month) / var(--timeline-months)) * (100% - (var(--timeline-inset) * 2))
+  );
+  top: 50%;
+  width: 1px;
+  height: 1.6rem;
+  background: rgba(101, 92, 80, 0.48);
+  transform: translate(-50%, -50%);
+}
+
+.experience-year-tick__label {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.65rem);
+  color: var(--muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.experience-event {
+  position: absolute;
+  left: calc(
+    var(--timeline-inset) +
+    (var(--month) / var(--timeline-months)) * (100% - (var(--timeline-inset) * 2))
+  );
+  top: 50%;
+  width: min(14rem, 22vw);
+  transform: translate(-50%, -50%);
+}
+
+.experience-event::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 3.15rem;
+  background: rgba(101, 92, 80, 0.46);
+  transform: translateX(-50%);
+}
+
+.experience-event::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 1px solid rgba(25, 24, 22, 0.5);
+  border-radius: 50%;
+  background: var(--bg);
+  transform: translate(-50%, -50%);
+}
+
+.experience-event--top {
+  padding-bottom: 7.4rem;
+}
+
+.experience-event--top::before {
+  transform: translateX(-50%) translateY(-100%);
+}
+
+.experience-event--bottom {
+  padding-top: 7.4rem;
+}
+
+.experience-event__title {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+
+.experience-event--top .experience-event__title {
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 3.95rem;
+}
+
+.experience-event--bottom .experience-event__title {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 3.95rem;
 }
 
 .kinetic-canvas {
@@ -252,6 +384,76 @@ body::after {
 @media (max-width: 640px) {
   .scroll-cue {
     top: 74%;
+  }
+
+  .experience-timeline {
+    --timeline-inset: 0.4rem;
+    margin-top: 1rem;
+    min-height: auto;
+    padding: 0 0 0 1.35rem;
+  }
+
+  .experience-timeline__line {
+    left: var(--timeline-inset);
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(180deg, rgba(101, 92, 80, 0.2), rgba(101, 92, 80, 0.68), rgba(101, 92, 80, 0.2));
+  }
+
+  .experience-timeline__line::before {
+    left: 50%;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 0.8rem;
+    height: auto;
+    transform: translateX(-50%);
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(101, 92, 80, 0.3) 0,
+      rgba(101, 92, 80, 0.3) 1px,
+      transparent 1px,
+      transparent calc(100% / var(--timeline-months))
+    );
+  }
+
+  .experience-event,
+  .experience-event--top,
+  .experience-event--bottom {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    padding: 0 0 0 1.8rem;
+    margin: 0 0 2rem;
+    transform: none;
+  }
+
+  .experience-event::before {
+    left: -0.95rem;
+    top: 1.1rem;
+    width: 1.4rem;
+    height: 1px;
+    transform: none;
+  }
+
+  .experience-event::after {
+    left: -0.95rem;
+    top: 1.1rem;
+    transform: translate(-50%, -50%);
+  }
+
+  .experience-year-tick {
+    display: none;
+  }
+
+  .experience-event--top .experience-event__title,
+  .experience-event--bottom .experience-event__title {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .section-nav {
