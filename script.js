@@ -5,6 +5,8 @@ const customCursor = document.getElementById("custom-cursor");
 const experienceIntro = document.getElementById("experience-intro");
 const experienceTimeline = document.getElementById("experience-timeline");
 const experienceMobileQuery = window.matchMedia("(max-width: 640px)");
+const aboutPhotoFrame = document.querySelector(".about-section__photo-frame");
+const aboutSupportingPhotoFrame = document.querySelector(".about-section__supporting-image-frame");
 
 const CONFIG = {
   name: "YINUO ZHAO",
@@ -885,6 +887,8 @@ function updatePointer(clientX, clientY) {
     customCursor.style.transform = `translate(${clientX - 6}px, ${clientY - 6}px)`;
     customCursor.classList.add("is-visible");
   }
+
+  updateAboutPhotoReveal(clientX, clientY);
 }
 
 function releasePointer() {
@@ -898,6 +902,41 @@ function releasePointer() {
   if (customCursor) {
     customCursor.classList.remove("is-visible");
   }
+
+  if (aboutPhotoFrame) {
+    aboutPhotoFrame.classList.remove("is-active");
+  }
+
+  if (aboutSupportingPhotoFrame) {
+    aboutSupportingPhotoFrame.classList.remove("is-active");
+  }
+}
+
+function updateAboutPhotoReveal(clientX, clientY) {
+  updateAboutFrameReveal(aboutPhotoFrame, clientX, clientY);
+  updateAboutFrameReveal(aboutSupportingPhotoFrame, clientX, clientY);
+}
+
+function updateAboutFrameReveal(frame, clientX, clientY) {
+  if (!frame) {
+    return;
+  }
+
+  const rect = frame.getBoundingClientRect();
+  const isInside =
+    clientX >= rect.left &&
+    clientX <= rect.right &&
+    clientY >= rect.top &&
+    clientY <= rect.bottom;
+
+  frame.classList.toggle("is-active", isInside);
+
+  if (!isInside) {
+    return;
+  }
+
+  frame.style.setProperty("--about-reveal-x", `${clientX - rect.left}px`);
+  frame.style.setProperty("--about-reveal-y", `${clientY - rect.top}px`);
 }
 
 function setupSectionNav() {
