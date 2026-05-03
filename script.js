@@ -4,6 +4,7 @@ const navRail = document.getElementById("section-nav");
 const customCursor = document.getElementById("custom-cursor");
 const experienceIntro = document.getElementById("experience-intro");
 const experienceTimeline = document.getElementById("experience-timeline");
+const experienceMobileQuery = window.matchMedia("(max-width: 640px)");
 
 const CONFIG = {
   name: "YINUO ZHAO",
@@ -115,19 +116,286 @@ function renderExperienceTimeline() {
     experienceTimeline.appendChild(tick);
   }
 
-  events.forEach((event, index) => {
-    const eventDate = parseContentMonth(event.date);
-    const monthOffset = getMonthsBetween(rangeStart, eventDate);
+  const laidOutEvents = getExperienceEventLayout(events, rangeStart);
+
+  laidOutEvents.forEach((event, index) => {
     const article = document.createElement("article");
     article.className = `experience-event experience-event--${index % 2 === 0 ? "top" : "bottom"}`;
-    article.style.setProperty("--month", `${monthOffset}`);
+    article.style.setProperty("--month", `${event.monthOffset}`);
+    article.style.setProperty("--event-level", `${event.level}`);
+    article.dataset.type = event.type || "other";
+    article.dataset.side = index % 2 === 0 ? "top" : "bottom";
+
+    const connector = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    connector.classList.add("experience-event__connector");
+    connector.setAttribute("aria-hidden", "true");
+    connector.setAttribute("focusable", "false");
+
+    const connectorPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    connectorPath.classList.add("experience-event__connector-path");
+    connector.appendChild(connectorPath);
+
+    const card = document.createElement("div");
+    card.className = "experience-event__card";
+
+    const meta = document.createElement("div");
+    meta.className = "experience-event__meta";
+
+    const date = document.createElement("p");
+    date.className = "experience-event__date";
+    date.textContent = formatExperienceDate(event.eventDate);
+
+    meta.appendChild(date);
 
     const title = document.createElement("h3");
     title.className = "experience-event__title";
     title.textContent = event.title;
 
-    article.appendChild(title);
+    const details = document.createElement("div");
+    details.className = "experience-event__details";
+
+    const detailsInner = document.createElement("div");
+    detailsInner.className = "experience-event__details-inner";
+
+    if (event.detailImage) {
+      const detailImage = document.createElement("img");
+      detailImage.className = "experience-event__detail-image";
+      detailImage.src = event.detailImage;
+      detailImage.alt = `${event.title} preview`;
+      detailImage.loading = "lazy";
+      detailImage.decoding = "async";
+      detailsInner.appendChild(detailImage);
+    }
+
+    const detailText = document.createElement("p");
+    detailText.className = "experience-event__detail-text";
+    detailText.textContent =
+      event.detailText ||
+      "Add a short note here about what this milestone meant, what you learned, or a memory you want to surface on hover.";
+
+    detailsInner.appendChild(detailText);
+    details.appendChild(detailsInner);
+    card.append(meta, title, details);
+    article.append(connector, card);
     experienceTimeline.appendChild(article);
+  });
+
+  positionExperienceTimelineCards();
+}
+
+function getExperienceEventLayout(events, rangeStart) {
+  const minGapMonths = 7;
+  const lanesBySide = {
+    top: [],
+    bottom: [],
+  };
+
+  return events.map((event, index) => {
+    const eventDate = parseContentMonth(event.date);
+    const monthOffset = getMonthsBetween(rangeStart, eventDate);
+    const side = index % 2 === 0 ? "top" : "bottom";
+    const lanes = lanesBySide[side];
+    let level = 0;
+
+    while (lanes[level] !== undefined && monthOffset - lanes[level] < minGapMonths) {
+      level += 1;
+    }
+
+    lanes[level] = monthOffset;
+
+    return {
+      ...event,
+      eventDate,
+      monthOffset,
+      level,
+    };
+  });
+}
+
+function formatExperienceDate({ year, month }) {
+  const date = new Date(year, month - 1, 1);
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+  }).format(date);
+}
+
+function positionExperienceTimelineCards() {
+  if (!experienceTimeline) {
+    return;
+  }
+
+  const events = [...experienceTimeline.querySelectorAll(".experience-event")];
+
+  if (!events.length) {
+    return;
+  }
+
+  events.forEach((event) => {
+    event.style.setProperty("--event-nudge", "0px");
+  });
+
+  if (experienceMobileQuery.matches) {
+    updateExperienceConnectors();
+    return;
+  }
+
+  const placementsBySide = {
+    top: [],
+    bottom: [],
+  };
+  const overlapPaddingX = 0;
+  const overlapPaddingY = 18;
+  const maxVerticalLevel = 6;
+
+  ["top", "bottom"].forEach((side) => {
+    const sideEvents = events
+      .filter((event) => event.dataset.side === side)
+      .sort(
+        (a, b) =>
+          Number.parseFloat(a.style.getPropertyValue("--month")) -
+          Number.parseFloat(b.style.getPropertyValue("--month"))
+      );
+
+    sideEvents.forEach((event) => {
+      const card = event.querySelector(".experience-event__card");
+
+      if (!card) {
+        return;
+      }
+
+      const timelineRect = experienceTimeline.getBoundingClientRect();
+      const baseRect = card.getBoundingClientRect();
+      const baseLevel = Number.parseFloat(event.style.getPropertyValue("--event-level")) || 0;
+      let chosenLevel = baseLevel;
+
+      for (let level = baseLevel; level <= maxVerticalLevel; level += 1) {
+        const verticalDelta = (level - baseLevel) * 4.5 * 16;
+        const candidateRect = {
+          left: baseRect.left,
+          right: baseRect.right,
+          top: side === "top" ? baseRect.top - verticalDelta : baseRect.top + verticalDelta,
+          bottom: side === "top" ? baseRect.bottom - verticalDelta : baseRect.bottom + verticalDelta,
+        };
+
+        const overlaps = placementsBySide[side].some((placedRect) => {
+          return !(
+            candidateRect.right + overlapPaddingX <= placedRect.left ||
+            candidateRect.left >= placedRect.right + overlapPaddingX ||
+            candidateRect.bottom + overlapPaddingY <= placedRect.top ||
+            candidateRect.top >= placedRect.bottom + overlapPaddingY
+          );
+        });
+
+        if (!overlaps) {
+          chosenLevel = level;
+          break;
+        }
+      }
+
+      event.style.setProperty("--event-level", `${chosenLevel}`);
+      placementsBySide[side].push({
+        left: baseRect.left,
+        right: baseRect.right,
+        top: side === "top" ? baseRect.top - (chosenLevel - baseLevel) * 4.5 * 16 : baseRect.top + (chosenLevel - baseLevel) * 4.5 * 16,
+        bottom: side === "top" ? baseRect.bottom - (chosenLevel - baseLevel) * 4.5 * 16 : baseRect.bottom + (chosenLevel - baseLevel) * 4.5 * 16,
+      });
+    });
+
+    applyExperienceHorizontalNudges(sideEvents);
+  });
+
+  updateExperienceConnectors();
+}
+
+function applyExperienceHorizontalNudges(events) {
+  const groups = new Map();
+
+  events.forEach((event) => {
+    const month = event.style.getPropertyValue("--month");
+    const group = groups.get(month) || [];
+    group.push(event);
+    groups.set(month, group);
+  });
+
+  groups.forEach((group) => {
+    if (group.length < 2) {
+      return;
+    }
+
+    const card = group[0].querySelector(".experience-event__card");
+
+    if (!card) {
+      return;
+    }
+
+    const nudgeStep = card.getBoundingClientRect().width / 4;
+    const midpoint = (group.length - 1) / 2;
+
+    group.forEach((event, index) => {
+      const offset = (index - midpoint) * nudgeStep;
+      event.style.setProperty("--event-nudge", `${offset}px`);
+    });
+  });
+}
+
+function updateExperienceConnectors() {
+  if (!experienceTimeline) {
+    return;
+  }
+
+  const events = [...experienceTimeline.querySelectorAll(".experience-event")];
+
+  events.forEach((event) => {
+    const connector = event.querySelector(".experience-event__connector");
+    const path = connector && connector.querySelector(".experience-event__connector-path");
+    const card = event.querySelector(".experience-event__card");
+
+    if (!connector || !path || !card) {
+      return;
+    }
+
+    if (experienceMobileQuery.matches) {
+      connector.removeAttribute("viewBox");
+      path.removeAttribute("d");
+      return;
+    }
+
+    const eventRect = event.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const anchorX = eventRect.left + eventRect.width / 2;
+    const anchorY = eventRect.top + eventRect.height / 2;
+    const targetX = cardRect.left + cardRect.width / 2;
+    const targetY = event.dataset.side === "top" ? cardRect.bottom : cardRect.top;
+    const dx = targetX - anchorX;
+    const dy = targetY - anchorY;
+    const minX = Math.min(0, dx);
+    const maxX = Math.max(0, dx);
+    const minY = Math.min(0, dy);
+    const maxY = Math.max(0, dy);
+    const width = Math.max(1, maxX - minX);
+    const height = Math.max(1, maxY - minY);
+    const startX = -minX;
+    const startY = -minY;
+    const endX = dx - minX;
+    const endY = dy - minY;
+
+    connector.style.left = `calc(50% + ${minX}px)`;
+    connector.style.top = `calc(50% + ${minY}px)`;
+    connector.style.width = `${width}px`;
+    connector.style.height = `${height}px`;
+    connector.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+    const curveOffsetX = Math.abs(dx) < 1 ? width * 0.28 : 0;
+    const control1X = startX + curveOffsetX;
+    const control2X = endX + curveOffsetX;
+    const control1Y = startY + dy * 0.68;
+    const control2Y = endY - dy * 0.18;
+    path.setAttribute(
+      "d",
+      `M ${startX} ${startY} C ${control1X} ${control1Y}, ${control2X} ${control2Y}, ${endX} ${endY}`
+    );
   });
 }
 
@@ -722,6 +990,7 @@ window.addEventListener("pointercancel", releasePointer);
 window.addEventListener("blur", releasePointer);
 document.addEventListener("mouseleave", releasePointer);
 window.addEventListener("resize", updateCanvasSize);
+window.addEventListener("resize", positionExperienceTimelineCards);
 
 renderExperienceTimeline();
 makeLetters();
