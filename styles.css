@@ -361,6 +361,81 @@ body::after {
   font-size: 1rem;
 }
 
+.contact-section {
+  text-align: center;
+}
+
+.contact-section__title {
+  margin: 0 0 1.75rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.contact-section__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  margin-top: 2rem;
+  justify-items: center;
+}
+
+.contact-section__detail {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.contact-section__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 6rem;
+}
+
+.contact-section__icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.contact-section__icon-link:hover,
+.contact-section__icon-link:focus-visible {
+  border-color: rgba(25, 24, 22, 0.92);
+  color: rgba(25, 24, 22, 0.76);
+  outline: none;
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.contact-section__icon-link svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: currentColor;
+}
+
+.contact-section p.contact-section__footer-note {
+  margin: 0 auto 3rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
 .experience-timeline {
   --timeline-months: 71;
   --timeline-inset: 1.5rem;
@@ -711,18 +786,6 @@ img.experience-event__icon {
   text-decoration-thickness: 1px;
 }
 
-.site-footer {
-  padding: 0 1.5rem 8rem;
-  text-align: center;
-}
-
-.site-footer p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.82rem;
-  letter-spacing: 0.04em;
-}
-
 @media (pointer: fine) {
   html,
   body,
@@ -734,6 +797,20 @@ img.experience-event__icon {
 }
 
 @media (max-width: 640px) {
+  .contact-section__layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .contact-section__actions {
+    justify-content: center;
+  }
+
+  .contact-section__icon-link {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
   .scroll-cue {
     top: 74%;
   }
