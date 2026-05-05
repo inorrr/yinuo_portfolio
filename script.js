@@ -4,6 +4,8 @@ const navRail = document.getElementById("section-nav");
 const customCursor = document.getElementById("custom-cursor");
 const experienceIntro = document.getElementById("experience-intro");
 const experienceTimeline = document.getElementById("experience-timeline");
+const projectsLayout = document.getElementById("projects-layout");
+const aboutLogoBanner = document.getElementById("about-logo-banner");
 const experienceMobileQuery = window.matchMedia("(max-width: 640px)");
 const aboutPhotoFrame = document.querySelector(".about-section__photo-frame");
 const aboutSupportingPhotoFrame = document.querySelector(".about-section__supporting-image-frame");
@@ -183,6 +185,198 @@ function renderExperienceTimeline() {
   });
 
   positionExperienceTimelineCards();
+}
+
+function renderProjectsSection() {
+  const projectsContent = window.SITE_CONTENT && window.SITE_CONTENT.projects;
+
+  if (!projectsLayout || !projectsContent) {
+    return;
+  }
+
+  const {
+    publicationsHeading,
+    publications,
+    workingPapersHeading,
+    workingPapers,
+    otherProjectsHeading,
+    otherProjects,
+    featuredProjectsHeading,
+    featuredProjects,
+  } = projectsContent;
+
+  projectsLayout.replaceChildren(
+    createProjectsLeftPanel(
+      publicationsHeading,
+      publications,
+      workingPapersHeading,
+      workingPapers,
+      otherProjectsHeading,
+      otherProjects
+    ),
+    createFeaturedProjectsPanel(featuredProjectsHeading, featuredProjects)
+  );
+}
+
+function renderAboutLogoBanner() {
+  const logos = window.SITE_CONTENT && window.SITE_CONTENT.logos;
+
+  if (!aboutLogoBanner || !Array.isArray(logos) || !logos.length) {
+    if (aboutLogoBanner) {
+      aboutLogoBanner.hidden = true;
+    }
+    return;
+  }
+
+  aboutLogoBanner.hidden = false;
+  aboutLogoBanner.replaceChildren(createAboutLogoTrack(logos));
+}
+
+function createAboutLogoTrack(logos) {
+  const track = document.createElement("div");
+  track.className = "about-section__logo-track";
+  track.append(createAboutLogoGroup(logos), createAboutLogoGroup(logos, true));
+  return track;
+}
+
+function createAboutLogoGroup(logos, isDecorative = false) {
+  const group = document.createElement("div");
+  group.className = "about-section__logo-group";
+
+  if (isDecorative) {
+    group.setAttribute("aria-hidden", "true");
+  }
+
+  logos.forEach((logo) => {
+    const image = document.createElement("img");
+    image.className = "about-section__logo";
+    image.src = logo.src;
+    image.alt = isDecorative ? "" : logo.alt;
+    image.loading = "lazy";
+    image.decoding = "async";
+    group.appendChild(image);
+  });
+
+  return group;
+}
+
+function createProjectsLeftPanel(
+  publicationsHeading,
+  publications,
+  workingPapersHeading,
+  workingPapers,
+  otherProjectsHeading,
+  otherProjects
+) {
+  const panel = document.createElement("div");
+  panel.className = "projects-panel projects-panel--publications";
+
+  panel.append(
+    createProjectsHeading(publicationsHeading),
+    createProjectsList(publications, {
+      listClassName: "projects-list projects-list--publications",
+    }),
+    createProjectsSubheading(workingPapersHeading),
+    createProjectsList(workingPapers),
+    createProjectsSubheading(otherProjectsHeading),
+    createProjectsList(otherProjects)
+  );
+
+  return panel;
+}
+
+function createFeaturedProjectsPanel(heading, items) {
+  const panel = document.createElement("div");
+  panel.className = "projects-panel projects-panel--featured";
+
+  const title = createProjectsHeading(heading);
+  const grid = document.createElement("div");
+  grid.className = "featured-projects-grid";
+
+  items.forEach((item) => {
+    const article = document.createElement("article");
+    article.className = "featured-project-card";
+
+    const link = document.createElement("a");
+    link.className = "featured-project-card__link";
+    link.href = item.href;
+    link.target = "_blank";
+    link.rel = "noreferrer";
+
+    const image = document.createElement("img");
+    image.className = "featured-project-card__image";
+    image.src = item.imageSrc;
+    image.alt = item.imageAlt;
+
+    const body = document.createElement("div");
+    body.className = "featured-project-card__body";
+
+    const heading = document.createElement("h4");
+    heading.textContent = item.title;
+
+    const tags = document.createElement("p");
+    tags.className = "featured-project-card__tags";
+    tags.textContent = item.tags;
+
+    body.append(heading, tags);
+    link.append(image, body);
+    article.appendChild(link);
+
+    if (item.status === "In development") {
+      const badge = document.createElement("span");
+      badge.className = "featured-project-card__status-badge";
+      badge.textContent = "Working";
+      article.appendChild(badge);
+    }
+
+    grid.appendChild(article);
+  });
+
+  panel.append(title, grid);
+  return panel;
+}
+
+function createProjectsHeading(text) {
+  const heading = document.createElement("h3");
+  heading.textContent = text;
+  return heading;
+}
+
+function createProjectsSubheading(text) {
+  const heading = createProjectsHeading(text);
+  heading.classList.add("projects-panel__subheading");
+  return heading;
+}
+
+function createProjectsList(items, options = {}) {
+  const list = document.createElement("ul");
+  list.className = options.listClassName || "projects-list";
+
+  items.forEach((item) => {
+    const listItem = document.createElement("li");
+
+    if (item.html) {
+      listItem.innerHTML = item.html;
+    } else {
+      const text = document.createTextNode(item.text || "");
+      listItem.appendChild(text);
+
+      if (item.link) {
+        listItem.appendChild(document.createTextNode(" "));
+        const link = document.createElement("a");
+        link.className = "projects-inline-link";
+        link.href = item.link.href;
+        link.target = "_blank";
+        link.rel = "noreferrer";
+        link.textContent = item.link.label;
+        listItem.appendChild(link);
+      }
+    }
+
+    list.appendChild(listItem);
+  });
+
+  return list;
 }
 
 function getExperienceEventLayout(events, rangeStart) {
@@ -1032,6 +1226,8 @@ window.addEventListener("resize", updateCanvasSize);
 window.addEventListener("resize", positionExperienceTimelineCards);
 
 renderExperienceTimeline();
+renderAboutLogoBanner();
+renderProjectsSection();
 makeLetters();
 setupSectionNav();
 updateCanvasSize();

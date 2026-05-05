@@ -18,7 +18,7 @@
       crossorigin
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
@@ -74,12 +74,12 @@
       <div class="about-section__photo-frame">
         <img
           class="about-section__photo about-section__photo--base"
-          src="./resources/photos/about.JPG"
+          src="./contents/resources/photos/about.JPG"
           alt="Portrait of Yinuo Zhao"
         />
         <img
           class="about-section__photo about-section__photo--color"
-          src="./resources/photos/about.JPG"
+          src="./contents/resources/photos/about.JPG"
           alt=""
           aria-hidden="true"
         />
@@ -87,12 +87,12 @@
       <div class="about-section__supporting-image-frame">
         <img
           class="about-section__supporting-image about-section__supporting-image--base"
-          src="./resources/photos/about_real.JPG"
+          src="./contents/resources/photos/about_real.JPG"
           alt="Yinuo Zhao portrait"
         />
         <img
           class="about-section__supporting-image about-section__supporting-image--color"
-          src="./resources/photos/about_real.JPG"
+          src="./contents/resources/photos/about_real.JPG"
           alt=""
           aria-hidden="true"
         />
@@ -109,7 +109,7 @@
         <div class="about-section__actions">
           <a
             class="about-section__action-button"
-            href="./docs/YinuoZhao_ds2026.pdf"
+            href="./contents/docs/placeholder_resume.pdf"
             target="_blank"
             rel="noreferrer"
           >
@@ -123,6 +123,11 @@
           </a>
         </div>
       </div>
+      <div
+        class="about-section__logo-banner"
+        id="about-logo-banner"
+        aria-label="Organizations and communities"
+      ></div>
     </section>
 
     <section
@@ -152,29 +157,13 @@
       data-section
       data-nav-label="Projects"
     >
-      <div class="content-section__inner">
-        <p class="content-section__eyebrow">Projects</p>
-        <h2 id="projects-title">Projects and publications</h2>
-        <p class="content-section__intro">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-        <div class="content-group">
-          <div class="content-entry">
-            <h3>Projects</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-          <div class="content-entry">
-            <h3>Publications</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-        </div>
+      <div class="content-section__inner content-section__inner--wide">
+        <h2 id="projects-title">What I've done</h2>
+        <div
+          class="projects-layout"
+          id="projects-layout"
+          aria-label="Projects and publications lists"
+        ></div>
       </div>
     </section>
 
@@ -193,7 +182,7 @@
         <div class="contact-section__layout">
           <div class="contact-section__copy">
             <p class="contact-section__detail">Email: [first][last]@hsph.harvard.edu</p>
-            <p class="contact-section__detail">Location: cambridge, MA</p>
+            <p class="contact-section__detail">Location: Cambridge, MA, USA</p>
           </div>
           <div class="contact-section__actions" aria-label="Contact links">
             <a
@@ -241,7 +230,9 @@
       <div class="section-nav__rail" id="section-nav"></div>
     </nav>
 
-    <script src="./content/site-content.js"></script>
+    <script src="./contents/experience-content.js"></script>
+    <script src="./contents/logos-content.js"></script>
+    <script src="./contents/projects-content.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>
