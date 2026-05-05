@@ -317,6 +317,7 @@ body::after {
   display: flex;
   width: max-content;
   animation: about-logo-marquee 24s linear infinite;
+  will-change: transform;
 }
 
 .about-section__logo-group {
@@ -338,11 +339,11 @@ body::after {
 
 @keyframes about-logo-marquee {
   from {
-    transform: translateX(-50%);
+    transform: translateX(0);
   }
 
   to {
-    transform: translateX(0);
+    transform: translateX(calc(-1 * var(--about-logo-loop-distance, 0px)));
   }
 }
 

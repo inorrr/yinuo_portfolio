@@ -9,6 +9,7 @@ const aboutLogoBanner = document.getElementById("about-logo-banner");
 const experienceMobileQuery = window.matchMedia("(max-width: 640px)");
 const aboutPhotoFrame = document.querySelector(".about-section__photo-frame");
 const aboutSupportingPhotoFrame = document.querySelector(".about-section__supporting-image-frame");
+let aboutLogoTrackResizeObserver;
 
 const CONFIG = {
   name: "YINUO ZHAO",
@@ -229,14 +230,55 @@ function renderAboutLogoBanner() {
   }
 
   aboutLogoBanner.hidden = false;
-  aboutLogoBanner.replaceChildren(createAboutLogoTrack(logos));
+  const track = createAboutLogoTrack(logos);
+  aboutLogoBanner.replaceChildren(track);
+  syncAboutLogoTrack(track);
 }
 
 function createAboutLogoTrack(logos) {
   const track = document.createElement("div");
   track.className = "about-section__logo-track";
   track.append(createAboutLogoGroup(logos), createAboutLogoGroup(logos, true));
+
+  track.querySelectorAll("img").forEach((image) => {
+    image.addEventListener("load", () => {
+      syncAboutLogoTrack(track);
+    });
+  });
+
   return track;
+}
+
+function syncAboutLogoTrack(track = aboutLogoBanner && aboutLogoBanner.querySelector(".about-section__logo-track")) {
+  if (!track) {
+    return;
+  }
+
+  const firstGroup = track.querySelector(".about-section__logo-group");
+
+  if (!firstGroup) {
+    return;
+  }
+
+  const loopDistance = firstGroup.getBoundingClientRect().width;
+
+  if (!loopDistance) {
+    requestAnimationFrame(() => syncAboutLogoTrack(track));
+    return;
+  }
+
+  track.style.setProperty("--about-logo-loop-distance", `${loopDistance}px`);
+
+  if (aboutLogoTrackResizeObserver) {
+    aboutLogoTrackResizeObserver.disconnect();
+  }
+
+  if ("ResizeObserver" in window) {
+    aboutLogoTrackResizeObserver = new ResizeObserver(() => {
+      syncAboutLogoTrack(track);
+    });
+    aboutLogoTrackResizeObserver.observe(firstGroup);
+  }
 }
 
 function createAboutLogoGroup(logos, isDecorative = false) {
