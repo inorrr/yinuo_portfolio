@@ -69,6 +69,14 @@ window.SITE_CONTENT.projects = {
       status: "In development",
     },
     {
+      href: "https://github.com/inorrr/mutwo-activation-checkpointing",
+      imageSrc: "contents/resources/photos/mutwo.png",
+      imageAlt: "Minimal warm-toned illustration of GPU activation checkpointing and memory profiling",
+      title: "PyTorch GPU Memory Profiler for Activation Checkpointing",
+      tags: "#PyTorch #DeepLearningSystems #GPUComputing #ActivationCheckpointing #MachineLearningInfrastructure",
+      status: "In development",
+    },
+    {
       href: "https://inorrr.github.io/ascii_live/",
       imageSrc: "contents/resources/photos/ascii.png",
       imageAlt: "Light orange placeholder preview for Project Gamma",
@@ -88,13 +96,6 @@ window.SITE_CONTENT.projects = {
       imageAlt: "Light orange placeholder preview for Project Delta",
       title: "Glassbox Translate: Visualizing Grammar-Driven Translation",
       tags: "#NaturalLanguageProcessing #ComputationalLinguistics #MachineTranslation #FastAPI #SoftwareEngineering",
-    },
-    {
-      href: "https://example.com/featured-project-epsilon",
-      imageSrc: featuredProjectPlaceholderImage,
-      imageAlt: "Light orange placeholder preview for Project Epsilon",
-      title: "More to come.",
-      tags: "#WaitForIt #BeExcited #StayTuned",
     },
   ],
 };
