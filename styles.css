@@ -141,22 +141,24 @@ body::after {
   --about-gap: clamp(1.5rem, 3vw, 3rem);
   --about-banner-offset: clamp(5.8rem, 10vw, 7.2rem);
   position: relative;
+  width: min(100%, 88rem);
+  margin: 0 auto;
   align-items: center;
   justify-content: flex-end;
-  padding: 0;
+  padding: 0 2rem;
 }
 
 .about-section p.about-section__hashtags {
   position: absolute;
   top: 1.4rem;
-  right: 1.5rem;
+  left: calc(var(--about-primary-width) + var(--about-gap));
   margin: 0;
   color: rgba(25, 24, 22, 0.5);
   font-family: "SFMono-Regular", "SF Mono", "IBM Plex Mono", "Menlo",
     "Consolas", monospace;
   font-size: 0.78rem;
   letter-spacing: 0.08em;
-  text-align: right;
+  text-align: left;
   text-transform: uppercase;
   z-index: 2;
 }
@@ -253,28 +255,33 @@ body::after {
 
 .about-section__inner {
   width: min(42rem, calc(100% - var(--about-primary-width) - var(--about-secondary-width) - (var(--about-gap) * 2)));
-  margin: 0 5rem 0 0;
-  padding: 5rem 1.5rem calc(var(--about-banner-offset) + 3rem);
-  text-align: right;
+  margin: 0 2rem 0 auto;
+  padding: 3.8rem 5rem calc(var(--about-banner-offset) + 3rem) 6.4rem;
+  text-align: left;
 }
 
 .about-section .content-section__intro {
-  margin-left: auto;
-  margin-right: 0;
-  font-size: clamp(0.92rem, 1.55vw, 1.06rem);
-  text-align: right;
+  margin-left: 0;
+  margin-right: auto;
+  font-size: clamp(0.68rem, 1.05vw, 0.78rem);
+  line-height: 1.3;
+  text-align: left;
+}
+
+.about-section .content-section__intro + .content-section__intro {
+  margin-top: 1rem;
 }
 
 .about-section .content-section__eyebrow,
 .about-section h2 {
-  text-align: right;
+  text-align: left;
 }
 
 .about-section__actions {
   display: flex;
   width: 100%;
   gap: 0.8rem;
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-top: 1.5rem;
 }
 
@@ -305,10 +312,11 @@ body::after {
 .about-section__logo-banner {
   position: absolute;
   left: 50%;
-  right: 1.5rem;
+  width: 100vw;
   bottom: var(--about-banner-offset);
   overflow: hidden;
   padding: 0.9rem 0;
+  transform: translateX(-50%);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
@@ -339,11 +347,11 @@ body::after {
 
 @keyframes about-logo-marquee {
   from {
-    transform: translateX(0);
+    transform: translateX(calc(-1 * var(--about-logo-loop-distance, 0px)));
   }
 
   to {
-    transform: translateX(calc(-1 * var(--about-logo-loop-distance, 0px)));
+    transform: translateX(0);
   }
 }
 
@@ -386,6 +394,11 @@ body::after {
   font-size: clamp(2.4rem, 6vw, 4.8rem);
   font-weight: 500;
   line-height: 0.95;
+}
+
+#about-title {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  line-height: 1.2;
 }
 
 .content-section p {
@@ -1024,10 +1037,12 @@ img.experience-event__icon {
   }
 
   .about-section__logo-banner {
-    left: 1rem;
-    right: 1rem;
+    left: 0;
+    right: 0;
+    width: auto;
     bottom: var(--about-banner-offset);
     padding: 0.75rem 0;
+    transform: none;
   }
 
   .about-section__logo {
