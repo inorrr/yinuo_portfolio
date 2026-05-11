@@ -53,14 +53,6 @@ window.SITE_CONTENT.projects = {
   featuredProjectsHeading: "Featured projects",
   featuredProjects: [
     {
-      href: "https://inorrr.github.io/climate_vulnerability/",
-      imageSrc: "contents/resources/photos/climate_vulnerability.png",
-      imageAlt: "Light orange placeholder preview for Project Alpha",
-      title: "Climate Vulnerability and Social Justice in the Greater Boston Area",
-      tags: "#GeoSpatial #DataVisualization #D3js #InteractiveVisualization #UrbanAnalytics #GIS",
-      status: "In development",
-    },
-    {
       href: "https://github.com/inorrr/mirror_fit",
       imageSrc: "contents/resources/photos/mirrorfit.png",
       imageAlt: "Light orange placeholder preview for Project Zeta",
@@ -69,12 +61,18 @@ window.SITE_CONTENT.projects = {
       status: "In development",
     },
     {
+      href: "https://inorrr.github.io/climate_vulnerability/",
+      imageSrc: "contents/resources/photos/climate_vulnerability.png",
+      imageAlt: "Light orange placeholder preview for Project Alpha",
+      title: "Climate Vulnerability and Social Justice in the Greater Boston Area",
+      tags: "#GeoSpatial #DataVisualization #D3js #InteractiveVisualization #UrbanAnalytics #GIS",
+    },
+    {
       href: "https://github.com/inorrr/mutwo-activation-checkpointing",
       imageSrc: "contents/resources/photos/mutwo.png",
       imageAlt: "Minimal warm-toned illustration of GPU activation checkpointing and memory profiling",
       title: "PyTorch GPU Memory Profiler for Activation Checkpointing",
       tags: "#PyTorch #DeepLearningSystems #GPUComputing #ActivationCheckpointing #MachineLearningInfrastructure",
-      status: "In development",
     },
     {
       href: "https://inorrr.github.io/ascii_live/",
